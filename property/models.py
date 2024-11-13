@@ -4,10 +4,24 @@ from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
 
-class Flat(models.Model):
+class Owner(models.Model):
     owner = models.CharField('ФИО владельца', max_length=200)
     owners_phonenumber = models.CharField('Номер владельца', max_length=20)
-    owner_pure_phone = PhoneNumberField(blank=True, null=True)
+    owner_pure_phone = PhoneNumberField(
+        'Нормированный номер владельца',
+        blank=True, null=True
+    )
+    flats = models.ManyToManyField(
+        'Flat',
+        related_name='owners',
+        verbose_name='Квартиры в собственности'
+    )
+
+    def __str__(self):
+        return self.owner
+
+
+class Flat(models.Model):
     new_building = models.BooleanField(null=True, blank=True)
 
     description = models.TextField('Текст объявления', blank=True)
@@ -75,17 +89,3 @@ class Complaints(models.Model):
         verbose_name='Квартира, на которую пожаловались'
     )
     text_complaints = models.TextField('Текст жалобы')
-
-
-class Owner(models.Model):
-    owner = models.CharField('ФИО владельца', max_length=200)
-    owners_phonenumber = models.CharField('Номер владельца', max_length=20)
-    owner_pure_phone = PhoneNumberField(
-        'Нормированный номер владельца',
-        blank=True, null=True
-    )
-    flats = models.ManyToManyField(
-        'Flat',
-        related_name='owners',
-        verbose_name='Квартиры в собственности'
-    )
