@@ -6,8 +6,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class Owner(models.Model):
     owner = models.CharField('ФИО владельца', max_length=200)
-    owners_phonenumber = models.CharField('Номер владельца', max_length=20)
-    owner_pure_phone = PhoneNumberField(
+    phone_number = models.CharField('Номер владельца', max_length=20)
+    pure_phone = PhoneNumberField(
         'Нормированный номер владельца',
         blank=True, null=True
     )
@@ -63,6 +63,7 @@ class Flat(models.Model):
     likes = models.ManyToManyField(
         User,
         verbose_name='Кто лайкнул',
+        related_name='liked_flats',
         blank=True
         )
 
@@ -82,10 +83,13 @@ class Complaints(models.Model):
         related_name='complaints',
         verbose_name='Кто жаловался'
     )
-    address_complaints = models.ForeignKey(
+    address = models.ForeignKey(
         Flat,
         on_delete=models.CASCADE,
         related_name='complaints',
         verbose_name='Квартира, на которую пожаловались'
     )
-    text_complaints = models.TextField('Текст жалобы')
+    text = models.TextField('Текст жалобы')
+
+    def __str__(self):
+        return self.user
