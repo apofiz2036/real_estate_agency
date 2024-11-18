@@ -6,8 +6,8 @@ import phonenumbers
 
 
 def copy_owners_phonenumber_to_owner_pure_phone(apps, schema_editor):
-    FlatModel = apps.get_model('property', 'Flat')
-    for flat in FlatModel.objects.iterator():
+    Flat = apps.get_model('property', 'Flat')
+    for flat in Flat.objects.iterator():
         owners_phonenumber = flat.owners_phonenumber
         with suppress(Exception):
             owner_pure_phone = phonenumbers.parse(owners_phonenumber, "RU")
@@ -17,8 +17,8 @@ def copy_owners_phonenumber_to_owner_pure_phone(apps, schema_editor):
 
 
 def move_backward(apps, schema_editor):
-    FlatModel = apps.get_model('property', 'Flat')
-    for flat in FlatModel.objects.all():
+    Flat = apps.get_model('property', 'Flat')
+    for flat in Flat.objects.all():
         flat.owner_pure_phone = ''
         flat.save()
 

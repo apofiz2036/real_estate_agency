@@ -5,7 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Owner(models.Model):
-    owner = models.CharField('ФИО владельца', max_length=200)
+    full_name = models.CharField('ФИО владельца', max_length=200)
     phone_number = models.CharField('Номер владельца', max_length=20)
     pure_phone = PhoneNumberField(
         'Нормированный номер владельца',

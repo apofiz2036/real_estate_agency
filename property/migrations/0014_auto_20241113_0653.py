@@ -4,11 +4,11 @@ from django.db import migrations
 
 
 def link_flats_to_owner(apps, schemaeditor):
-    FlatModel = apps.get_model('property', 'Flat')
-    OwnerModel = apps.get_model('property', 'Owner')
+    Flat = apps.get_model('property', 'Flat')
+    Owner = apps.get_model('property', 'Owner')
 
-    for flat in FlatModel.objects.iterator():
-        owner = OwnerModel.objects.filter(
+    for flat in Flat.objects.iterator():
+        owner = Owner.objects.filter(
             owner=flat.owner,
             owners_phonenumber=flat.owners_phonenumber,
             owner_pure_phone=flat.owner_pure_phone
@@ -19,8 +19,8 @@ def link_flats_to_owner(apps, schemaeditor):
 
 
 def move_backward(apps, schema_editor):
-    FlatModel = apps.get_model('property', 'Flat')
-    for flat in FlatModel.objects.all():
+    Flat = apps.get_model('property', 'Flat')
+    for flat in Flat.objects.all():
         flat.owners.clear()
 
 

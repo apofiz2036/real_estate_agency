@@ -4,10 +4,10 @@ from django.db import migrations
 
 
 def copy_from_flat_to_owner(apps, schema_editor):
-    FlatModel = apps.get_model('property', 'Flat')
+    Flat = apps.get_model('property', 'Flat')
     OwnerModel = apps.get_model('property', 'Owner')
 
-    for flat in FlatModel.objects.iterator():
+    for flat in Flat.objects.iterator():
         OwnerModel.objects.get_or_create(
             owner=flat.owner,
             owners_phonenumber=flat.owners_phonenumber,
@@ -16,8 +16,8 @@ def copy_from_flat_to_owner(apps, schema_editor):
 
 
 def move_backward(apps, schema_editor):
-    OwnerModel = apps.get_model('property', 'Owner')
-    OwnerModel.objects.all().delete()
+    Owner = apps.get_model('property', 'Owner')
+    Owner.objects.all().delete()
 
 
 class Migration(migrations.Migration):
